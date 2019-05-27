@@ -1,0 +1,24 @@
+<script src="/assets/vendors/jquery/jquery.js"></script>
+<script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+<script src="/assets/vendors/template/template.js"></script>
+<script>NProgress.done()</script>
+</body>
+</html>
+<script>
+    // 给退出按钮注册点击事件,点击推出,跳转到login页面,并删除session数据
+    $('#logout').on('click',function(e){
+      e.preventDefault();
+      $.ajax({
+          type:'get',
+          url:'/logout',
+          success:function(res){
+            let {status,msg}=res;
+            if(status==200){
+              alert(msg);
+              window.location='/login'
+            }
+            
+          }
+      })
+    })
+</script>

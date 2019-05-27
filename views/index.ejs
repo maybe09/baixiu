@@ -1,0 +1,55 @@
+<% include layout/header %>
+  <div class="main">
+      <% include layout/nav %>
+    <div class="container-fluid">
+      <div class="jumbotron text-center">
+        <h1>One Belt, One Road</h1>
+        <p>Thoughts, stories and ideas.</p>
+        <p><a class="btn btn-primary btn-lg" href="/post-add" role="button">写文章</a></p>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">站点内容统计：</h3>
+            </div>
+            <ul class="list-group" id="ul">
+             
+              
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+  </div>
+  <% include layout/aside %>
+  <% include layout/footer %>
+  <script id="tmp" type="text/html">
+    <li class="list-group-item"><strong>{{num1}}</strong>篇文章（<strong>{{num2}}</strong>篇草稿）</li>
+    <li class="list-group-item"><strong>{{num3}}</strong>个分类</li>
+    <li class="list-group-item"><strong>{{num4}}</strong>条评论（<strong>{{num5}}</strong>条待审核）</li>
+  </script>
+   <script>
+        function getArtnum(){
+           $.ajax({
+             type:'get',
+             url:'/getArtnum',
+             success:function(res){
+               console.log(res);
+              let obj={
+                num1:res.data[0][0]['COUNT(*)'],
+                num2:res.data[1][0]['COUNT(*)'],
+                num3:res.data[2][0]['COUNT(*)'],
+                num4:res.data[3][0]['COUNT(*)'],
+                num5:res.data[4][0]['COUNT(*)']
+              }
+               let html=template('tmp',obj);
+               $('#ul').append(html)
+             }
+           })
+        };
+        getArtnum()
+        
+   </script>
